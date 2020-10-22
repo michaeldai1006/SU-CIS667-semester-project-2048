@@ -7,8 +7,8 @@ TODO:
 5. slideDown
 6. slideLeft
 7. slideRight
-8. rotateCenterCW
-9. rotateCenterCCW
+8. ~~rotateCenterCW~~
+9. ~~rotateCenterCCW~~
 10. validActions
 11. isGameEnded
 12. \_\_main\_\_
