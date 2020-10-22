@@ -105,16 +105,32 @@ class Game2048State(object):
     Return a new game state instance instead of modify the current game state
     """
     def rotateCenterCW(self):
-        # TODO: 8
-        return
+        # Copy game board
+        result = np.empty_like(self.board)
+        result[:] = self.board
+
+        # Rotate center
+        rot_bd = int(self.size / 2 - 1)
+        result[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2] = np.rot90(self.board[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2], 3)
+
+        # Rotated state
+        return result
 
     """
     Rotate the center 2x2 square counterclockwise for 90 degrees
     Return a new game state instance instead of modify the current game state
     """
     def rotateCenterCCW(self):
-        # TODO: 9
-        return
+        # Copy game board
+        result = np.empty_like(self.board)
+        result[:] = self.board
+
+        # Rotate center
+        rot_bd = int(self.size / 2 - 1)
+        result[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2] = np.rot90(self.board[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2])
+
+        # Rotated state
+        return result
     
     """
     Return a list of valid actions
@@ -139,5 +155,10 @@ Interactive game entry game
 Prompt the user to play the game
 """    
 if __name__ == "__main__":
-    # TODO: 12
-    print("Hello, World!")
+    # # TODO: 12
+    # print("Hello, World!")
+
+    game = Game2048State(6)
+    game.board = np.array([[i]*6 for i in range(6)])
+    print(game.board)
+    print(game.rotateCenterCCW())
