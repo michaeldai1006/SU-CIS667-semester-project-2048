@@ -105,32 +105,32 @@ class Game2048State(object):
     Return a new game state instance instead of modify the current game state
     """
     def rotateCenterCW(self):
-        # Copy game board
-        result = np.empty_like(self.board)
-        result[:] = self.board
+        # New game state, copy game board
+        new_state = Game2048State(self.size)
+        new_state.board = np.copy(self.board)
 
         # Rotate center
         rot_bd = int(self.size / 2 - 1)
-        result[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2] = np.rot90(self.board[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2], 3)
+        new_state.board[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2] = np.rot90(self.board[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2], 3)
 
         # Rotated state
-        return result
+        return new_state
 
     """
     Rotate the center 2x2 square counterclockwise for 90 degrees
     Return a new game state instance instead of modify the current game state
     """
     def rotateCenterCCW(self):
-        # Copy game board
-        result = np.empty_like(self.board)
-        result[:] = self.board
-
+        # New game state, copy game board
+        new_state = Game2048State(self.size)
+        new_state.board = np.copy(self.board)
+        
         # Rotate center
         rot_bd = int(self.size / 2 - 1)
-        result[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2] = np.rot90(self.board[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2])
+        new_state.board[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2] = np.rot90(self.board[rot_bd:rot_bd + 2, rot_bd:rot_bd + 2])
 
         # Rotated state
-        return result
+        return new_state
     
     """
     Return a list of valid actions
