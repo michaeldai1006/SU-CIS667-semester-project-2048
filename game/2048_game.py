@@ -155,10 +155,5 @@ Interactive game entry game
 Prompt the user to play the game
 """    
 if __name__ == "__main__":
-    # # TODO: 12
-    # print("Hello, World!")
-
-    game = Game2048State(6)
-    game.board = np.array([[i]*6 for i in range(6)])
-    print(game.board)
-    print(game.rotateCenterCCW())
+    # TODO: 12
+    print("Hello, World!")
