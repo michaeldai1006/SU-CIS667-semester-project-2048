@@ -82,17 +82,20 @@ class Game2048State(object):
         b = new_state.board
         #This sums everything as long as there are only 0's (or nothing) between them
         for c in range(0, self.size):
-            for r in range(0, self.size-1):
+            r = 0
+            while r < self.size:
                 for temp_r in range(r+1, self.size):
                     if b[temp_r][c] != 0 and b[r][c] != b[temp_r][c]:
                         #If we find a num not 0, we change r to that number
                         r = temp_r
-                    elif b[temp_r][c] != 0 and b[r][c] == b[temp_r][c]:
+                    elif b[r][c] != 0 and b[r][c] == b[temp_r][c]:
                         #If we find two numbers that are the same, sum them
                         #and zero out the 2nd location
                         b[r][c] = b[r][c] * 2
                         b[temp_r][c] = 0
                         r = temp_r
+                        temp_r +=1
+                r +=1
 
         #to slide everything up now, already summed.
         for r in range(0, self.size):
@@ -116,7 +119,15 @@ class Game2048State(object):
     """
     def slideDown(self):
         # TODO: 5
-        return
+        new_state = Game2048State(self.size)
+        new_state.board = np.copy(self.board)
+
+        #Simply rotating the board to use SlideUp, then rotating it back
+        new_state.board = np.rot90(new_state.board, 2)
+        new_state = new_state.slideUp()
+        new_state.board = np.rot90(new_state.board, 2)
+
+        return new_state
 
     """
     Slide the tiles toward left, merge tiles if needed
@@ -124,7 +135,14 @@ class Game2048State(object):
     """
     def slideLeft(self):
         # TODO: 6
-        return
+        new_state = Game2048State(self.size)
+        new_state.board = np.copy(self.board)
+
+        #Simply rotating the board to use SlideUp, then rotating it back
+        new_state.board = np.rot90(new_state.board, 3)
+        new_state = new_state.slideUp()
+        new_state.board = np.rot90(new_state.board, 1)
+        return new_state
 
     """
     Slide the tiles toward right, merge tiles if needed
@@ -132,7 +150,16 @@ class Game2048State(object):
     """
     def slideRight(self):
         # TODO: 7
-        return
+        new_state = Game2048State(self.size)
+        new_state.board = np.copy(self.board)
+
+        #Simply rotating the board to use SlideUp, then rotating it back
+        new_state.board = np.rot90(new_state.board, 1)
+        new_state = new_state.slideUp()
+        new_state.board = np.rot90(new_state.board, 3)
+
+
+        return new_state
     
     """
     Rotate the center 2x2 square clockwise for 90 degrees
@@ -191,3 +218,35 @@ Prompt the user to play the game
 if __name__ == "__main__":
     # TODO: 12
     print("Hello, World!")
+
+    #Testing Diana used for the sliding functions
+    """
+    game = Game2048State(4)
+    game.board[0][0] = 2
+    game.board[1][0] = 2
+    game.board[2][0] = 4
+    game.board[3][0] = 2
+
+    game.board[0][1] = 4
+    game.board[1][1] = 2
+    game.board[2][1] = 4
+    game.board[3][1] = 4
+
+    game.board[0][2] = 2
+    game.board[1][2] = 2
+    game.board[2][2] = 4
+    game.board[3][2] = 4
+
+    game.board[0][3] = 8
+    game.board[1][3] = 8
+    game.board[2][3] = 0
+    game.board[3][3] = 8
+
+
+    print("original:")
+    print(game.board)
+    new_state = game.slideRight()
+
+    print("slideRight:")
+    print(new_state.board)
+    """
