@@ -9,6 +9,7 @@ Packages
 """
 import numpy as np
 from enum import Enum
+import random
 
 """
 Enum that indicates different players of the game
@@ -50,7 +51,13 @@ class Game2048State(object):
     """
     def __str__(self):
         # TODO: 1
-        return ""
+        string_rep = ""
+        for i in range(self.board.shape[0]):
+            for j in range(self.board.shape[1]):
+                string_rep = string_rep + str(self.board[i][j])
+            if(i != self.board.shape[0]-1):
+                string_rep = string_rep +'   \n   '
+        return string_rep
 
     """
     Initialize game, generate 2 new tiles with value of either 2 or 4 at random locations
@@ -58,15 +65,33 @@ class Game2048State(object):
     """
     def initialState(self):
         # TODO: 2
-        return
+        
+        # How many entries to replace
+        REPLACE_COUNT = 2
+
+        # What to replace with
+        tile = [2,4]
+        REPLACE_WITH = random.choice(tile)
+        
+        y = self.board.flat[np.random.choice(self.board.shape[0] * self.board.shape[1], REPLACE_COUNT, replace=False)] = REPLACE_WITH
+        return self.board
 
     """
     Add a new tile at a random empty spot with value of either 2 or 4
     Return a new game state instance instead of modify the current game state
     """
     def addNewTile(self):
+        
         # TODO: 3
-        return 
+        # How many entries to replace
+        REPLACE_COUNT = 1
+
+        # What to replace with
+        tile = [2,4]
+        REPLACE_WITH = random.choice(tile)
+       
+        y = self.board.flat[np.random.choice(self.board.shape[0] * self.board.shape[1], REPLACE_COUNT, replace=False)] = REPLACE_WITH
+        return self.board
 
     """
     Slide the tiles up, merge tiles if needed
@@ -218,35 +243,3 @@ Prompt the user to play the game
 if __name__ == "__main__":
     # TODO: 12
     print("Hello, World!")
-
-    #Testing Diana used for the sliding functions
-    """
-    game = Game2048State(4)
-    game.board[0][0] = 2
-    game.board[1][0] = 2
-    game.board[2][0] = 4
-    game.board[3][0] = 2
-
-    game.board[0][1] = 4
-    game.board[1][1] = 2
-    game.board[2][1] = 4
-    game.board[3][1] = 4
-
-    game.board[0][2] = 2
-    game.board[1][2] = 2
-    game.board[2][2] = 4
-    game.board[3][2] = 4
-
-    game.board[0][3] = 8
-    game.board[1][3] = 8
-    game.board[2][3] = 0
-    game.board[3][3] = 8
-
-
-    print("original:")
-    print(game.board)
-    new_state = game.slideRight()
-
-    print("slideRight:")
-    print(new_state.board)
-    """
