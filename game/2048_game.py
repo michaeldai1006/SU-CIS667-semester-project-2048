@@ -74,7 +74,41 @@ class Game2048State(object):
     """
     def slideUp(self):
         # TODO: 4
-        return
+
+        # New game state, copy game board
+        new_state = Game2048State(self.size)
+        new_state.board = np.copy(self.board)
+
+        b = new_state.board
+        #This sums everything as long as there are only 0's (or nothing) between them
+        for c in range(0, self.size):
+            for r in range(0, self.size-1):
+                for temp_r in range(r+1, self.size):
+                    if b[temp_r][c] != 0 and b[r][c] != b[temp_r][c]:
+                        #If we find a num not 0, we change r to that number
+                        r = temp_r
+                    elif b[temp_r][c] != 0 and b[r][c] == b[temp_r][c]:
+                        #If we find two numbers that are the same, sum them
+                        #and zero out the 2nd location
+                        b[r][c] = b[r][c] * 2
+                        b[temp_r][c] = 0
+                        r = temp_r
+
+        #to slide everything up now, already summed.
+        for r in range(0, self.size):
+            for c in range(0, self.size):
+                for temp_r in range(r, self.size):
+                    if b[temp_r][c] == 0:
+                        #If it's 0, we don't care.
+                        temp_r +1
+                    elif temp_r != r and b[r][c] == 0:
+                        #If it's not 0, we bring it to the most up 0.
+                        b[r][c] = b[temp_r][c]
+                        b[temp_r][c] = 0
+
+        return new_state
+
+
 
     """
     Slide the tiles down, merge tiles if needed
