@@ -50,7 +50,14 @@ class Game2048State(object):
     """
     def __str__(self):
         # TODO: 1
-        return ""
+        string_rep = ""
+        for i in range(self.board.shape[0]):
+            for j in range(self.board.shape[1]):
+                string_rep = string_rep + str(self.board[i][j])
+            if(i != self.board.shape[0]-1):
+                string_rep = string_rep +'\n'
+        print(string_rep)
+        return string_rep
 
     """
     Initialize game, generate 2 new tiles with value of either 2 or 4 at random locations
@@ -58,15 +65,35 @@ class Game2048State(object):
     """
     def initialState(self):
         # TODO: 2
-        return
+        
+        # How many entries to replace
+        REPLACE_COUNT = 2
+
+        # What to replace with
+        tile = [2,4]
+        REPLACE_WITH = random.choice(tile)
+        
+        z = self.board
+        y = z.flat[np.random.choice(self.board.shape[0] * self.board.shape[1], REPLACE_COUNT, replace=False)] = REPLACE_WITH
+        return z
 
     """
     Add a new tile at a random empty spot with value of either 2 or 4
     Return a new game state instance instead of modify the current game state
     """
     def addNewTile(self):
+        
         # TODO: 3
-        return 
+        # How many entries to replace
+        REPLACE_COUNT = 1
+
+        # What to replace with
+        tile = [2,4]
+        REPLACE_WITH = random.choice(tile)
+        
+        z = self.board
+        y = z.flat[np.random.choice(self.board.shape[0] * self.board.shape[1], REPLACE_COUNT, replace=False)] = REPLACE_WITH
+        return z
 
     """
     Slide the tiles up, merge tiles if needed
