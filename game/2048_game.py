@@ -155,5 +155,18 @@ Interactive game entry game
 Prompt the user to play the game
 """    
 if __name__ == "__main__":
-    # TODO: 12
-    print("Hello, World!")
+    # New game state instance with board size 4
+    game = Game2048State(4)
+
+    # Add some tiles to the board
+    game.board[0][2] = 2
+    game.board[2][2] = 2
+
+    # Print current game state
+    print(game.board)
+
+    # Perform sliding
+    new_state = game.slideUp()
+
+    # Print updated game state
+    print(new_state)
