@@ -80,6 +80,9 @@ class Game2048State(object):
 
         # Count empty tiles
         num_empty = np.count_nonzero(new_state.board==0)
+
+        # If no empty spot left, return unmodified state
+        if num_empty == 0: return new_state
         
         # New tile index
         index = np.random.randint(0, num_empty)
