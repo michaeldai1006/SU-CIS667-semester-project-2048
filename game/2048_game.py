@@ -279,8 +279,11 @@ class Game2048State(object):
                     return (True, Game2048Player.USER)
                     #exit()
         actions2 = []
-        #print(actions)
-        if len(new_state.validActions()) == 2:
+        
+        myList = []
+        myList.append(Game2048Action.ROTATE_CW)
+        myList.append(Game2048Action.ROTATE_CCW)
+        if ((new_state.validActions()) == myList):
             b = new_state
             b.board = np.copy(new_state.board)
             c = new_state
