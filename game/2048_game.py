@@ -218,9 +218,45 @@ class Game2048State(object):
     Return a list of valid actions
     Example: [Game2048Action.SLIDE_UP, Game2048Action.ROTATE_CW, Game2048Action.ROTATE_CCW]
     """
-    def validActions(self):
-        # TODO: 10
-        return
+    def validActions(self):       
+       new_state = Game2048State(self.size)
+       new_state.board = np.copy(self.board)
+       b = new_state
+       b.board = np.copy(new_state.board)
+       
+       actions = []
+       new_state = new_state.slideUp()
+       if str(b.board) != str(new_state.board):
+
+           actions.append(Game2048Action.SLIDE_UP)
+       new_state = b
+
+       new_state = new_state.slideDown()
+       if str(b.board) != str(new_state.board):
+           actions.append(Game2048Action.SLIDE_DOWN)
+       new_state = b
+
+       new_state = new_state.slideLeft()
+       if str(b.board) != str(new_state.board):
+           actions.append(Game2048Action.SLIDE_LEFT)
+       new_state = b
+       
+       new_state = new_state.slideRight()
+       if str(b.board) != str(new_state.board):
+           actions.append(Game2048Action.SLIDE_RIGHT)
+       new_state = b
+
+       mid = int(self.size / 2)
+       midNums = []
+       for i in range(mid-1,mid+1):
+           for j in range(mid-1,mid+1):
+               if not b.board[i][j] in midNums:
+                   midNums.append(b.board[i][j])
+       if len(midNums) != 1:
+           actions.append(Game2048Action.ROTATE_CW)
+           actions.append(Game2048Action.ROTATE_CCW)
+
+       return actions
 
     """
     Check whether current game is ended and find the winner
@@ -229,19 +265,78 @@ class Game2048State(object):
     return (False,) if game continues
     """
     def isGameEnded(self):
-        # TODO: 11
-        return
+        # New game state, copy game board
+        new_state = Game2048State(self.size)
+        new_state.board = np.copy(self.board)
+
+        b = new_state.board
+        for r in range(0, self.size):
+            for c in range(0, self.size):
+                if b[r][c] == 2048:
+                    return (True, Game2048Player.USER)
+                    #exit()
+        actions2 = []
+        #print(actions)
+        if len(new_state.validActions()) == 2:
+            b = new_state
+            b.board = np.copy(new_state.board)
+            c = new_state
+            b.board = np.copy(new_state.board)
+            b = new_state.rotateCenterCW()
+        
+            if str(b.board) != str(new_state.board):
+                c.board = np.copy(new_state.board)
+                new_state = new_state.slideUp()
+                if str(c.board) != str(new_state.board):
+                    actions2.append(Game2048Action.ROTATE_CW)
+                new_state = c
+                new_state = new_state.slideDown()
+                if str(c.board) != str(new_state.board):
+                    if not Game2048Action.ROTATE_CW in actions2:
+                        actions2.append(Game2048Action.ROTATE_CW)
+                new_state = c
+                new_state = new_state.slideLeft()
+                if str(c.board) != str(new_state.board):
+                    if not Game2048Action.ROTATE_CW in actions2:
+                        actions2.append(Game2048Action.ROTATE_CW)
+                new_state = c
+                new_state = new_state.slideRight()
+                if str(c.board) != str(new_state.board):
+                    if not Game2048Action.ROTATE_CW in actions2:
+                        actions2.append(Game2048Action.ROTATE_CW)
+            b = new_state
+            
+            new_state = new_state.rotateCenterCCW()
+            #print(actions2)
+            if str(b.board) != str(new_state.board):
+                c.board = np.copy(new_state.board)
+                new_state = new_state.slideUp()
+                if str(c.board) != str(new_state.board):
+                    actions2.append(Game2048Action.ROTATE_CCW)
+                new_state = c
+                new_state = new_state.slideDown()
+                if str(c.board) != str(new_state.board):
+                    if not Game2048Action.ROTATE_CCW in actions2:
+                        actions2.append(Game2048Action.ROTATE_CCW)
+                new_state = c
+                new_state = new_state.slideLeft()
+                if str(c.board) != str(new_state.board):
+                    if not Game2048Action.ROTATE_CCW in actions2:
+                        actions2.append(Game2048Action.ROTATE_CCW)
+                new_state = c
+                new_state = new_state.slideRight()
+                if str(c.board) != str(new_state.board):
+                    if not Game2048Action.ROTATE_CCW in actions2:
+                        actions2.append(Game2048Action.ROTATE_CCW)
+            b = new_state
+            #print(actions2)
+            if len(actions2) == 0:
+                return (True, Game2048Player.GAME)
+        return (False,)
 
 """
 Interactive game entry game
 Prompt the user to play the game
 """    
 if __name__ == "__main__":
-    game = Game2048State(4)
-    print(game)
-    print()
-    print()
-    print(game.initialState())
-    print()
-    print()
-    print(game)
+    TODO:
