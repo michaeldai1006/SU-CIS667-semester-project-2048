@@ -50,48 +50,52 @@ class Game2048State(object):
     Return a string representation of the current game board
     """
     def __str__(self):
-        # TODO: 1
         string_rep = ""
         for i in range(self.board.shape[0]):
             for j in range(self.board.shape[1]):
-                string_rep = string_rep + str(self.board[i][j])
+                string_rep = string_rep + '{:5}'.format(self.board[i][j])
             if(i != self.board.shape[0]-1):
-                string_rep = string_rep +'   \n   '
+                string_rep = string_rep +'\n\n'
         return string_rep
 
     """
     Initialize game, generate 2 new tiles with value of either 2 or 4 at random locations
     Return a new game state instance instead of modify the current game state
     """
-    def initialState(self):
-        # TODO: 2
-        
-        # How many entries to replace
-        REPLACE_COUNT = 2
+    def initialState(self):    
+        # Add two new tiles    
+        new_state = self.addNewTile()
+        new_state = new_state.addNewTile()
 
-        # What to replace with
-        tile = [2,4]
-        REPLACE_WITH = random.choice(tile)
-        
-        y = self.board.flat[np.random.choice(self.board.shape[0] * self.board.shape[1], REPLACE_COUNT, replace=False)] = REPLACE_WITH
-        return self.board
+        return new_state
 
     """
     Add a new tile at a random empty spot with value of either 2 or 4
     Return a new game state instance instead of modify the current game state
     """
     def addNewTile(self):
-        
-        # TODO: 3
-        # How many entries to replace
-        REPLACE_COUNT = 1
+        # New game state, copy game board
+        new_state = Game2048State(self.size)
+        new_state.board = np.copy(self.board)
 
-        # What to replace with
-        tile = [2,4]
-        REPLACE_WITH = random.choice(tile)
-       
-        y = self.board.flat[np.random.choice(self.board.shape[0] * self.board.shape[1], REPLACE_COUNT, replace=False)] = REPLACE_WITH
-        return self.board
+        # Count empty tiles
+        num_empty = np.count_nonzero(new_state.board==0)
+        
+        # New tile index
+        index = np.random.randint(0, num_empty)
+
+        # Add tile
+        counter = 0
+        for i in range(0, self.size):
+            for j in range(0, self.size):
+                if new_state.board[i][j] == 0:
+                    if counter == index:
+                        new_state.board[i][j] = np.random.choice([2,4])
+                        return new_state
+                    else:
+                        counter += 1
+    
+        return new_state
 
     """
     Slide the tiles up, merge tiles if needed
@@ -241,5 +245,11 @@ Interactive game entry game
 Prompt the user to play the game
 """    
 if __name__ == "__main__":
-    # TODO: 12
-    print("Hello, World!")
+    game = Game2048State(4)
+    print(game)
+    print()
+    print()
+    print(game.initialState())
+    print()
+    print()
+    print(game)
