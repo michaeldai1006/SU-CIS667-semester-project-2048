@@ -2,7 +2,7 @@
 ## About
 Command line 2048 game, written in Python. With slight modification to the original game rule: the agent can also choose to rotate the tiles in the 2x2 square in the middle of the board by +/- 90 degrees.
 
-## Dpendencies
+## Dependencies
 Python 3.4 or above is required. Make sure following Python dependencies are installed before executing the game:
 1. [numpy](https://numpy.org/)
 
