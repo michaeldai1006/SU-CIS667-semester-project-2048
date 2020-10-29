@@ -391,7 +391,7 @@ if __name__ == "__main__":
         valid_actions = state.validActions()
 
         # Prompt user to choose action
-        action_prompts = []; valid_commands = []
+        action_prompts = ['q = Quit']; valid_commands = ['q']
         for action in valid_actions: action_prompts.append(action_map[action]); valid_commands.append(action_command[action])
         print(action_prompts) 
         action = input("Enter an action: ")
@@ -406,6 +406,7 @@ if __name__ == "__main__":
         elif (action == 'r'): state = state.slideRight()
         elif (action == 'rc'): state = state.rotateCenterCW()
         elif (action == 'rcc'): state = state.rotateCenterCCW()
+        elif (action == 'q'): break
 
         # Add new tile to board
         state = state.addNewTile()
