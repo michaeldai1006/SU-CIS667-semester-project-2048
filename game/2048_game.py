@@ -335,8 +335,71 @@ class Game2048State(object):
         return (False,)
 
 """
-Interactive game entry game
+Interactive game entry point
 Prompt the user to play the game
 """    
 if __name__ == "__main__":
-    TODO:
+    # Main function constants
+    action_map = {
+        Game2048Action.SLIDE_UP: "u = Slide Up",
+        Game2048Action.SLIDE_DOWN: "d = Slide Down",
+        Game2048Action.SLIDE_LEFT: "l = Slide Left",
+        Game2048Action.SLIDE_RIGHT: "r = Slide Right",
+        Game2048Action.ROTATE_CW: "rc = Rotate Center Clockwise",
+        Game2048Action.ROTATE_CCW: "rcc = Rotate Center Counterclockwise"
+    }
+    action_command = {
+        Game2048Action.SLIDE_UP: "u",
+        Game2048Action.SLIDE_DOWN: "d",
+        Game2048Action.SLIDE_LEFT: "l",
+        Game2048Action.SLIDE_RIGHT: "r",
+        Game2048Action.ROTATE_CW: "rc",
+        Game2048Action.ROTATE_CCW: "rcc"
+    }
+
+    while True:
+        # Ask user for game board size
+        size = int(input("Enter game board size (4, 6 or 8): "))
+        
+        # Input size invalid
+        if (size not in [4, 6, 8]): print("Board size invalid"); continue
+
+        # Init game
+        state = Game2048State(size)
+        state = state.initialState()
+        break
+
+    # Prompt user to perform action
+    while True:
+        # Check game ending state
+        game_ending_state = state.isGameEnded()
+        if (game_ending_state[0]):
+            if (game_ending_state[1] == Game2048Player.GAME): print("Game Over, you lost"); break
+            else: print("Game Over, you won"); break
+
+        # Current game state
+        print("Current state:")
+        print(state)
+        
+        # Valid actions for current state
+        valid_actions = state.validActions()
+
+        # Prompt user to choose action
+        action_prompts = []; valid_commands = []
+        for action in valid_actions: action_prompts.append(action_map[action]); valid_commands.append(action_command[action])
+        print(action_prompts) 
+        action = input("Enter an action: ")
+
+        # Action not valid, choose again
+        if action not in valid_commands: print("Invalid action, please choose again"); continue
+
+        # Perform action
+        if (action == 'u'): state = state.slideUp()
+        elif (action == 'd'): state = state.slideDown()
+        elif (action == 'l'): state = state.slideLeft()
+        elif (action == 'r'): state = state.slideRight()
+        elif (action == 'rc'): state = state.rotateCenterCW()
+        elif (action == 'rcc'): state = state.rotateCenterCCW()
+
+        # Add new tile to board
+        state = state.addNewTile()
