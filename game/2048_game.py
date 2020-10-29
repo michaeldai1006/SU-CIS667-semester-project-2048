@@ -102,8 +102,6 @@ class Game2048State(object):
     Return a new game state instance instead of modify the current game state
     """
     def slideUp(self):
-        # TODO: 4
-
         # New game state, copy game board
         new_state = Game2048State(self.size)
         new_state.board = np.copy(self.board)
@@ -140,14 +138,11 @@ class Game2048State(object):
 
         return new_state
 
-
-
     """
     Slide the tiles down, merge tiles if needed
     Return a new game state instance instead of modify the current game state
     """
     def slideDown(self):
-        # TODO: 5
         new_state = Game2048State(self.size)
         new_state.board = np.copy(self.board)
 
@@ -163,7 +158,6 @@ class Game2048State(object):
     Return a new game state instance instead of modify the current game state
     """
     def slideLeft(self):
-        # TODO: 6
         new_state = Game2048State(self.size)
         new_state.board = np.copy(self.board)
 
@@ -178,7 +172,6 @@ class Game2048State(object):
     Return a new game state instance instead of modify the current game state
     """
     def slideRight(self):
-        # TODO: 7
         new_state = Game2048State(self.size)
         new_state.board = np.copy(self.board)
 
@@ -186,7 +179,6 @@ class Game2048State(object):
         new_state.board = np.rot90(new_state.board, 1)
         new_state = new_state.slideUp()
         new_state.board = np.rot90(new_state.board, 3)
-
 
         return new_state
     
