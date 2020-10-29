@@ -35,7 +35,7 @@ Current state:
     0    4    0    0
 
     0    0    0    0
-['u = Slide Up', 'd = Slide Down', 'l = Slide Left', 'r = Slide Right', 'rc = Rotate Center Clockwise', 'rcc = Rotate Center Counterclockwise']
+['q = Quit', ''u = Slide Up', 'd = Slide Down', 'l = Slide Left', 'r = Slide Right', 'rc = Rotate Center Clockwise', 'rcc = Rotate Center Counterclockwise']
 Enter an action: 
 ```
 
