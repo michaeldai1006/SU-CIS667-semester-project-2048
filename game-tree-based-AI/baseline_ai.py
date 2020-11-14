@@ -1,4 +1,4 @@
-# Import game state class, random module
+# Import game state and action class, random module
 Game2048State = __import__('2048_game').Game2048State
 Game2048Action = __import__('2048_game').Game2048Action
 import random
@@ -28,3 +28,14 @@ def getNextState(state):
 
 if __name__ == "__main__":
     # TODO: Implement baseline ai version game logic
+
+    # AI test
+    # state = Game2048State(4)
+    # state = state.initialState()
+    # print(state)
+
+    # for _ in range(0, 50000):
+    #     state = getNextState(state)
+    #     print(state)
+    #     state = state.addNewTile()
+    #     print(state)
