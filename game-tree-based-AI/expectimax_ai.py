@@ -9,6 +9,9 @@ import numpy as np
 # Max searching depth
 search_max_depth = 4
 
+# Processed tree nodes
+processed_nodes = 0
+
 # Tree search node class
 class Node(object):
     def __init__(self, state, player):
@@ -30,14 +33,23 @@ class Node(object):
 
 # Find next state using expectimax search
 def getNextState(state):
+    # Reset processed nodes counter
+    global processed_nodes
+    processed_nodes = 0
+
     # Find next best move    
     next_node = expectimax(Node(state, Game2048Player.USER), 0)
 
-    # Next state result
+    # Next state result and number of processed tree nodes
     return next_node.state
 
 # Expectimax tree search
 def expectimax(node, depth):
+    # Increase tree node counter
+    global processed_nodes
+    processed_nodes += 1
+
+    # Max depth reached
     if depth == search_max_depth: return node
 
     if node.player == Game2048Player.USER: return findMax(node, depth)
@@ -116,16 +128,16 @@ def findExp(node, depth):
     else: return next_node
 
 if __name__ == "__main__":
+    # AI demo
+    state = Game2048State(4)
+    state = state.initialState()
+    print(state)
 
-    # AI test
-    # state = Game2048State(4)
-    # state = state.initialState()
-    # print(state)
-
-    # for _ in range(0, 50000):
-    #     state = getNextState(state)
-    #     print(state)
-    #     state = state.addNewTile()
-    #     print()
-    #     print()
-    #     print(state)
+    for _ in range(0, 50000):
+        state = getNextState(state)
+        print("Number of tree nodes processed: %d" % processed_nodes)
+        print(state)
+        state = state.addNewTile()
+        print()
+        print()
+        print(state)

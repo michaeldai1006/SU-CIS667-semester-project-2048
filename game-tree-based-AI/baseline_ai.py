@@ -27,15 +27,13 @@ def getNextState(state):
     return result_state
 
 if __name__ == "__main__":
-    # TODO: Implement baseline ai version game logic
+    # AI demo
+    state = Game2048State(4)
+    state = state.initialState()
+    print(state)
 
-    # AI test
-    # state = Game2048State(4)
-    # state = state.initialState()
-    # print(state)
-
-    # for _ in range(0, 50000):
-    #     state = getNextState(state)
-    #     print(state)
-    #     state = state.addNewTile()
-    #     print(state)
+    for _ in range(0, 50000):
+        state = getNextState(state)
+        print(state)
+        state = state.addNewTile()
+        print(state)
