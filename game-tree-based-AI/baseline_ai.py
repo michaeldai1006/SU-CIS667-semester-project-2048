@@ -3,7 +3,7 @@ Game2048State = __import__('2048_game').Game2048State
 Game2048Action = __import__('2048_game').Game2048Action
 import random
 
-# Find next state when using baseline AI
+# Find next state using baseline AI
 def getNextState(state):
     # Random next action
     action = random.choice(state.validActions())
