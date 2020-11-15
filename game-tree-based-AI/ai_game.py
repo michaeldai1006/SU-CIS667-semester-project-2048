@@ -31,7 +31,7 @@ if __name__ == "__main__":
 			if (game_ending_state[1] == Game2048Player.GAME): print("Game Over, lost"); break
 			else: print("Game Over, won"); break
 
-		print("Current State: ")
+		print("Next State: ")
 		print(state) #Not printing? Weird
 
 		if (ai_type == 1):
@@ -39,5 +39,5 @@ if __name__ == "__main__":
 		elif (ai_type == 2):
 			state = expect_ai.getNextState(state)
 
-		cont = input('------'*size)
+		cont = input('------'*size + "Confirm? (Enter)")
 		state = state.addNewTile()
