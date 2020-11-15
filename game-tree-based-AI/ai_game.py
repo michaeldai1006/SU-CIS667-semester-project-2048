@@ -8,12 +8,11 @@ import expectimax_ai as expect_ai
 
 
 if __name__ == "__main__":
-    # TODO:
 	while True:
 		#Ask user for game board size
-		size = int(input("Enter game board size (4, 6, or 8): "))
+		size = int(input("Enter game board size (2, 4, 6, 8 or 10): "))
 
-		if (size not in [4, 6, 8]):
+		if (size not in [2, 4, 6, 8, 10]):
 			print("Board size invalid")
 			continue
 		state = Game2048State(size)
