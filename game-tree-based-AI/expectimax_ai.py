@@ -7,7 +7,7 @@ import math
 import numpy as np
 
 # Max searching depth
-search_max_depth = 4
+search_max_depth = 2
 
 # Processed tree nodes
 processed_nodes = 0
@@ -21,13 +21,20 @@ class Node(object):
     # Calculate utility of state
     def getUtility(self):
         utility = 0
+        empty_count = 0
 
         # Sum non 0 tile values, times factor
         # factor = log2(tile)
+        # Count num of zero tiles
         for i in range(self.state.board.shape[0]):
             for j in range(self.state.board.shape[1]):
                 if self.state.board[i][j] != 0:
                     utility += self.state.board[i][j] * math.log(self.state.board[i][j], 2)
+                else:
+                    empty_count += 1
+
+        # More zero tiles = higher utility
+        utility += empty_count * 5
 
         return utility
 
@@ -49,9 +56,7 @@ def expectimax(node, depth):
     global processed_nodes
     processed_nodes += 1
 
-    # Max depth reached
-    if depth == search_max_depth: return node
-
+    # Max or Exp the node
     if node.player == Game2048Player.USER: return findMax(node, depth)
     if node.player == Game2048Player.GAME: return findExp(node, depth)
 
@@ -84,9 +89,10 @@ def findMax(node, depth):
             next_nodes.append(Node(next_state, Game2048Player.GAME))
     
     # Find optimal board
-    for node in next_nodes:
-        if next_node == None: next_node = node
-        elif node.getUtility() > expectimax(node, depth + 1).getUtility(): next_node = node
+    max_utility = float('-inf')
+    for n in next_nodes:
+        expected_utility = expectimax(n, depth + 1)
+        if (expected_utility > max_utility): next_node = n; max_utility = expected_utility
     
     # Next move
     if next_node == None: return node
@@ -94,8 +100,10 @@ def findMax(node, depth):
 
 # Find expected state
 def findExp(node, depth):
-    # Expected next move
-    next_node = None
+    if depth >= search_max_depth: return node.getUtility()
+
+    # Expected utility
+    expected_utility = 0.0
 
     # All possible next nodes
     next_nodes = []
@@ -118,26 +126,18 @@ def findExp(node, depth):
                 next_state.board[i][j] = 4
                 next_nodes.append(Node(next_state, Game2048Player.USER))
 
-    # Find next expected node
-    for node in next_nodes:
-        if next_node == None: next_node = node
-        elif node.getUtility() < expectimax(node, depth + 1).getUtility(): next_node = node
+    # Sum up expected utility
+    for n in next_nodes:
+        expected_utility += 1/len(next_nodes) * expectimax(n, depth + 1).getUtility()
     
-    # Next move
-    if next_node == None: return node
-    else: return next_node
+    # Expected utility result
+    return expected_utility
 
 if __name__ == "__main__":
     # AI demo
     state = Game2048State(4)
     state = state.initialState()
-    print(state)
 
     for _ in range(0, 50000):
         state = getNextState(state)
-        print("Number of tree nodes processed: %d" % processed_nodes)
-        print(state)
         state = state.addNewTile()
-        print()
-        print()
-        print(state)
