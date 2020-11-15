@@ -7,7 +7,7 @@ import math
 import numpy as np
 
 # Max searching depth
-search_max_depth = 2
+search_max_depth = 0
 
 # Processed tree nodes
 processed_nodes = 0
@@ -43,6 +43,11 @@ def getNextState(state):
     # Reset processed nodes counter
     global processed_nodes
     processed_nodes = 0
+
+    # Update search depth
+    depth_map = {2: 5, 4: 2, 6: 1, 8: 1, 10: 1}
+    global search_max_depth
+    search_max_depth = depth_map[state.size]
 
     # Find next best move    
     next_node = expectimax(Node(state, Game2048Player.USER), 0)
