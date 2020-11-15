@@ -1,6 +1,6 @@
 # SU CIS667 Semester Project 2048 Game AI
 ## About
-Command line 2048 game, written in Python. With slight modification to the original game rule: the agent can also choose to rotate the tiles in the 2x2 square in the middle of the board by +/- 90 degrees.
+Command line 2048 game, written in Python 3. With slight modification to the original game rule: the agent can also choose to rotate the tiles in the 2x2 square in the middle of the board by +/- 90 degrees. Game can be played manually by user or by AI.
 
 ## Dependencies
 Python 3.4 or above is required. Make sure following Python dependencies are installed before executing the game:
@@ -15,12 +15,17 @@ git clone https://github.com/michaeldai1006/SU-CIS667-semester-project-2048.git
 ```
 cd ./SU-CIS667-semester-project-2048
 ```
-3. Run main game file
+3. Run standard game file
 ```
 python3 ./game/2048_game.py
 ```
 
-## Game Play
+3. Run AI game file
+```
+python3 ./game-tree-based-AI/ai_game.py
+```
+
+## Standard Game Play
 Provide game board size when seeing following command line prompt:
 ```
 Enter game board size (4, 6 or 8): 
@@ -39,5 +44,27 @@ Current state:
 Enter an action: 
 ```
 
+## AI Game Play
+Provide game board size when seeing following command line prompt, 5 game board sizes supported:
+```
+Enter game board size (2, 4, 6, 8 or 10): 
+```
+Choose which AI algorithm to use by typing 1 or 2:
+```
+Which AI should be used? 1: Baseline, 2: Tree Search (Expectimax) :
+```
+When AI has made their move, the game will print out the next game board state to let you confirm:
+```
+Next State: 
+    2    0    0    0
+
+    0    0    0    0
+
+    4    0    0    0
+
+    0    0    0    0
+------------------------Confirm? (Enter)
+```
+Hold down the enter key to fast forward
 ## Credits
 tdai06, kkha, dyzheng, ztanruan all rights reserved.
