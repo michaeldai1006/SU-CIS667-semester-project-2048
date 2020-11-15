@@ -45,7 +45,7 @@ def getNextState(state):
     processed_nodes = 0
 
     # Update search depth
-    depth_map = {2: 5, 4: 2, 6: 1, 8: 1, 10: 1}
+    depth_map = {2: 5, 4: 2, 6: 2, 8: 1, 10: 1}
     global search_max_depth
     search_max_depth = depth_map[state.size]
 
@@ -140,9 +140,14 @@ def findExp(node, depth):
 
 if __name__ == "__main__":
     # AI demo
-    state = Game2048State(4)
+    state = Game2048State(6)
     state = state.initialState()
+    print(state)
 
     for _ in range(0, 50000):
         state = getNextState(state)
+        print(state)
         state = state.addNewTile()
+        print(state)
+        node = Node(state, Game2048Player.GAME)
+        print(node.getUtility())

@@ -28,7 +28,7 @@ def getNextState(state):
 
 if __name__ == "__main__":
     # AI demo
-    state = Game2048State(4)
+    state = Game2048State(6)
     state = state.initialState()
     print(state)
 
