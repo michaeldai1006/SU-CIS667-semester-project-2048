@@ -29,8 +29,8 @@ def getUtility(state):
 
 if __name__ == "__main__":
     # Experiment inputs:
-    # experiment_ai = BaselineAI
-    experiment_ai = ExpectimaxAI
+    experiment_ai = BaselineAI
+    # experiment_ai = ExpectimaxAI
     board_size = 10
 
     # ==============================DO NOT MODIFY ANYTHING BELOW THIS LINE==============================
