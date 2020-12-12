@@ -12,13 +12,28 @@ search_max_depth = 0
 # Processed tree nodes
 processed_nodes = 0
 
+# TODO: #4
+# Generate NN module
+# return type: torch.nn.Module
+def getNet():
+    return
+
+# TODO: #5
+# Estimates utility of node
+# Takes a instance of Node class as input, estimate its utility using NN module generate by function getNet
+# return: estimated utility, type int
+def nn_utility(node):
+    return
+
 # Tree search node class
 class Node(object):
     def __init__(self, state, player):
         self.state = state
         self.player = player
 
+    # TODO: #6
     # Calculate utility of state
+    # Modify this function, so it adds the return value of nn_utility to the utility result
     def getUtility(self):
         utility = 0
         empty_count = 0

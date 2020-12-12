@@ -6,6 +6,8 @@ Game2048Player = __import__('2048_game').Game2048Player
 import baseline_ai as base_ai
 import expectimax_ai as expect_ai
 
+# TODO: #7
+# Modify this function, so user can choose to use the third AI type: expectimax_NN_ai
 if __name__ == "__main__":
 	while True:
 		#Ask user for game board size

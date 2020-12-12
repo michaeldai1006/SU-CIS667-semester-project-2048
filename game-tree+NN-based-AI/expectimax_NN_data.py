@@ -18,4 +18,4 @@ def get_batch(board_size, num_games):
 # Generate training data file
 # Call get_batch function, save training data as a ".pkl" file
 if __name__ == "__main__":
-    print("Not implemented yet")
+    print()
