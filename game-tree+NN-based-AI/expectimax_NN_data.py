@@ -10,7 +10,7 @@ def encode(state):
 # Needs to call encode function to encode state
 # return: (input, output)
 # input: list of encoded states
-# outpit: list of correspond utilities
+# output: list of correspond utilities
 def get_batch(board_size, num_games):
     return
 
