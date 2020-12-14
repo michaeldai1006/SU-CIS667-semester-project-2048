@@ -18,8 +18,12 @@ processed_nodes = 0
 def BlockusNet1(board_size):
     net = Sequential(
         Flatten(),
-        AlphaDropout(p=0.01, inplace=True),
-        Linear(in_features=board_size*board_size,out_features=10, bias = True)
+        #AlphaDropout(p=0.01, inplace=True),
+        Linear(in_features=board_size*board_size,out_features=120, bias = False),
+        Linear(in_features=120,out_features=80, bias = False),
+        Linear(in_features=80,out_features=40, bias = False),
+        Linear(in_features=40,out_features=20, bias = False),
+        Linear(in_features=20,out_features=10, bias = False)
     )
     return net
 
