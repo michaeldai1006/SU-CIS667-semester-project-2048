@@ -9,7 +9,7 @@ import expectimax_ai as expect_ai
 # Will be called by get_batch
 # return a tensor
 def encode(state):
-    return tr.from_numpy(state.board)
+    return tr.from_numpy(state.board).float()
     
 # #2
 # Generate training data for NN
@@ -38,10 +38,14 @@ def get_batch(board_size, num_games):
 
         # Utility of tree searched state
         node = expect_ai.Node(state, None)
-        outputs.append(node.getUtility())
+        outputs.append(tr.tensor([node.getUtility()]))
 
         # Add new tile to the game
         state = state.addNewTile()
+        
+    # Stack tensor
+    inputs = tr.stack(inputs)
+    outputs = tr.stack(outputs)
 
     # Result
     return (inputs, outputs)
@@ -50,6 +54,6 @@ def get_batch(board_size, num_games):
 # Generate training data file
 # Call get_batch function, save training data as a ".pkl" file
 if __name__ == "__main__":
-    board_size, num_games = 6, 100
+    board_size, num_games = 4, 100
     inputs, outputs = get_batch(board_size, num_games)
     with open("data%d.pkl" % board_size, "wb") as f: pk.dump((inputs, outputs), f)
