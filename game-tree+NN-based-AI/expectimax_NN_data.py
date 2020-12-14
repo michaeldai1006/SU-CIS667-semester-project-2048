@@ -5,7 +5,7 @@ Game2048State = __import__('2048_game').Game2048State
 import expectimax_ai as expect_ai
 
 # #1
-# Encode a 2048_game.Game2048State, use onehot encoding
+# Encode a 2048_game.Game2048State
 # Will be called by get_batch
 # return a tensor
 def encode(state):
@@ -55,5 +55,4 @@ def get_batch(board_size, num_games):
 # Call get_batch function, save training data as a ".pkl" file
 if __name__ == "__main__":
     board_size, num_games = 4, 100
-    inputs, outputs = get_batch(board_size, num_games)
-    with open("data%d.pkl" % board_size, "wb") as f: pk.dump((inputs, outputs), f)
+    with open("data%d.pkl" % board_size, "wb") as f: pk.dump(get_batch(board_size, num_games), f)

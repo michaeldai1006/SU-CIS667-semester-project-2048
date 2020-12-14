@@ -36,18 +36,26 @@ def optimization_step(optimizer, net, x, y_targ):
 
 ####
 
-# TODO: #4
+# #4
 # Generate NN module
 # return type: torch.nn.Module
-def getNet():
-    return
+def getNet(board_size):
+    return Sequential(
+        Flatten(),
+        Linear(in_features=board_size*board_size,out_features=1)
+    )
 
-# TODO: #5
+# #5
 # Estimates utility of node
 # Takes a instance of Node class as input, estimate its utility using NN module generate by function getNet
 # return: estimated utility, type int
 def nn_utility(node):
-    return
+    # NN instance
+    net = getNet(node.state.size)
+    net.load_state_dict(tr.load("model%d.pth" % node.state.size))
+
+    # Predicted NN factor
+    return net(tr.tensor([node.state.board]).float()).flatten()[0]
 
 # Tree search node class
 class Node(object):
@@ -55,7 +63,7 @@ class Node(object):
         self.state = state
         self.player = player
 
-    # TODO: #6
+    # #6
     # Calculate utility of state
     # Modify this function, so it adds the return value of nn_utility to the utility result
     def getUtility(self):
@@ -74,6 +82,9 @@ class Node(object):
 
         # More zero tiles = higher utility
         utility += empty_count * 5
+
+        # Add NN factor
+        utility += nn_utility(self)
 
         return utility
 
@@ -191,6 +202,8 @@ if __name__ == "__main__":
     shuffle = np.random.permutation(range(len(x)))
     split = 10
     train, test = shuffle[:-split], shuffle[-split:]
+
+    print(x[train])
 
     for epoch in range(5000):
         y_train, e_train = optimization_step(optimizer, net, x[train], y_targ[train])
