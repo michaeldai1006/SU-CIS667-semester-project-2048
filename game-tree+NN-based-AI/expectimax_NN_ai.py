@@ -6,7 +6,7 @@ import random
 import math
 import numpy as np
 import torch as tr
-from torch.nn import Sequential, Conv2d, Linear, Flatten, LeakyReLU, Tanh
+from torch.nn import Sequential, Conv2d, Linear, Flatten, LeakyReLU, Tanh, Bilinear, AlphaDropout
 
 # Max searching depth
 search_max_depth = 0
@@ -18,7 +18,8 @@ processed_nodes = 0
 def BlockusNet1(board_size):
     net = Sequential(
         Flatten(),
-        Linear(in_features=board_size*board_size,out_features=1)
+        AlphaDropout(p=0.01, inplace=True),
+        Linear(in_features=board_size*board_size,out_features=10, bias = True)
     )
     return net
 
