@@ -1,28 +1,55 @@
-# TODO: #1
+import torch as tr
+import numpy as np
+import pickle as pk
+Game2048State = __import__('2048_game').Game2048State
+import expectimax_ai as expect_ai
+
+# #1
 # Encode a 2048_game.Game2048State, use onehot encoding
 # Will be called by get_batch
 # return a tensor
 def encode(state):
-    onehot = tr.zeros((3, state.size, state.size))
-    for i in state.plays[1]:
-        onehot[1, i[0]:i[0]+i[2].shape[0], i[1]:i[1]+i[2].shape[1]] = tr.Tensor(i[2].copy())
-    for i in state.plays[2]:
-        onehot[2, i[0]:i[0]+i[2].shape[0], i[1]:i[1]+i[2].shape[1]] = tr.Tensor(i[2].copy())
-    onehot[0,:,:] = ((onehot[1,:,:] + onehot[2,:,:]) == 0).int()
+    return tr.from_numpy(state.board)
     
-    return onehot
-    
-# TODO: #2
+# #2
 # Generate training data for NN
 # Needs to call encode function to encode state
 # return: (input, output)
 # input: list of encoded states
 # output: list of correspond utilities
 def get_batch(board_size, num_games):
-    return
+    inputs = []
+    outputs = []
 
-# TODO: #3
+    # Start new game
+    state = Game2048State(board_size)
+    state = state.initialState()
+
+    # Iterate num_games times
+    for i in range(0, num_games):
+        # Game ended
+        if state.isGameEnded()[0]: break
+
+        # Record state
+        inputs.append(encode(state))
+
+        # Tree search next state
+        state = expect_ai.getNextState(state)
+
+        # Utility of tree searched state
+        node = expect_ai.Node(state, None)
+        outputs.append(node.getUtility())
+
+        # Add new tile to the game
+        state = state.addNewTile()
+
+    # Result
+    return (inputs, outputs)
+
+# #3
 # Generate training data file
 # Call get_batch function, save training data as a ".pkl" file
 if __name__ == "__main__":
-    print()
+    board_size, num_games = 6, 100
+    inputs, outputs = get_batch(board_size, num_games)
+    with open("data%d.pkl" % board_size, "wb") as f: pk.dump((inputs, outputs), f)
