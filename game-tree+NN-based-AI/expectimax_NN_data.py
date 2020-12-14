@@ -54,6 +54,9 @@ def get_batch(board_size, num_games):
 # Generate training data file
 # Call get_batch function, save training data as a ".pkl" file
 if __name__ == "__main__":
-    board_size, num_games = 4, 100
-    inputs, outputs = get_batch(board_size, num_games)
-    with open("data%d.pkl" % board_size, "wb") as f: pk.dump((inputs, outputs), f)
+    list_board = [2,4,6,8,10]
+    for i in list_board:
+    
+        board_size, num_games = i, 100
+        inputs, outputs = get_batch(board_size, num_games)
+        with open("data%d.pkl" % board_size, "wb") as f: pk.dump((inputs, outputs), f)
