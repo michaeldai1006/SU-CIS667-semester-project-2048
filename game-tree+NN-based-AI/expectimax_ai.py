@@ -45,7 +45,7 @@ def getNextState(state):
     processed_nodes = 0
 
     # Update search depth
-    depth_map = {2: 5, 4: 2, 6: 2, 8: 1, 10: 1}
+    depth_map = {2: 5, 4: 1, 6: 1, 8: 1, 10: 1}
     global search_max_depth
     search_max_depth = depth_map[state.size]
 
