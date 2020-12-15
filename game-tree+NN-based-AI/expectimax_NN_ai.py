@@ -26,6 +26,18 @@ def getNet(board_size):
         Linear(in_features=board_size,out_features=1)
     )
 
+## ZHEN XIN TAN RUAN NEURAL NETWORK
+# def getNet(board_size):
+#     return Sequential(
+#         Flatten(),
+#         Linear(in_features=board_size*board_size,out_features=board_size),
+#         Linear(in_features=board_size,out_features=64),
+#         Linear(in_features=64,out_features=128),
+#         Linear(in_features=128,out_features=64),
+#         Linear(in_features=64,out_features=board_size),
+#         ReLU()
+#     )
+
 # #5
 # Estimates utility of node
 # Takes a instance of Node class as input, estimate its utility using NN module generate by function getNet

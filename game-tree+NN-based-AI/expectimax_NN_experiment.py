@@ -69,7 +69,7 @@ if __name__ == "__main__":
             counter = 0
             while True:
                 counter += 1
-                if counter >= 5000: break
+                if counter >= 5000: utilities.append(int(getUtility(state))); break
                 # AI plays
                 state = experiment_ai.getNextState(state)
                 if (state.isGameEnded()[0] == True): utilities.append(int(getUtility(state))); break
