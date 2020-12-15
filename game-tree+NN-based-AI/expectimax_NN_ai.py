@@ -22,8 +22,11 @@ processed_nodes = 0
 def getNet(board_size):
     return Sequential(
         Flatten(),
-        Linear(in_features=board_size*board_size,out_features=board_size),
-        Linear(in_features=board_size,out_features=1)
+        Linear(in_features=board_size*board_size,out_features=10),
+        Linear(10,8),
+        Linear(8,4),
+        Linear(4,2),
+        Linear(2,1)
     )
 
 # #5
@@ -183,7 +186,7 @@ if __name__ == "__main__":
         train = shuffle[:-10]
 
         # Gradient descent
-        optimizer = tr.optim.Adam(net.parameters())
+        optimizer = tr.optim.Adamax(net.parameters())
         for epoch in range(1000):
             optimizer.zero_grad()
             y_train = net(x[train])
