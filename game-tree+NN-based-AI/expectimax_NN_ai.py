@@ -23,8 +23,13 @@ def getNet(board_size):
     return Sequential(
         Flatten(),
         Linear(in_features=board_size*board_size,out_features=board_size),
-        Linear(in_features=board_size,out_features=1)
+        Linear(in_features=board_size,out_features=int(board_size/2)),
+        Linear(in_features=int(board_size/2),out_features=1)
     )
+
+
+
+
 
 # #5
 # Estimates utility of node
@@ -183,7 +188,7 @@ if __name__ == "__main__":
         train = shuffle[:-10]
 
         # Gradient descent
-        optimizer = tr.optim.Adam(net.parameters())
+        optimizer = tr.optim.AdamW(net.parameters())
         for epoch in range(1000):
             optimizer.zero_grad()
             y_train = net(x[train])
