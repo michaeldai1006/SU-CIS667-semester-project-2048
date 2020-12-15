@@ -48,6 +48,17 @@ def getNet(board_size):
 #         Linear(in_features=int(board_size/2),out_features=1)
 #     )
 
+## KEVIN KHA NEURAL NETWORK
+# def getNet(board_size):
+#     return Sequential(
+#         Flatten(),
+#         Linear(in_features=board_size*board_size,out_features=10),
+#         Linear(10,8),
+#         Linear(8,4),
+#         Linear(4,2),
+#         Linear(2,1)
+#     )
+
 # #5
 # Estimates utility of node
 # Takes a instance of Node class as input, estimate its utility using NN module generate by function getNet
@@ -206,6 +217,12 @@ if __name__ == "__main__":
 
         # Gradient descent
         optimizer = tr.optim.Adam(net.parameters())
+
+        ## DIANA ZHENG OPTIMIZER
+        # optimizer = tr.optim.AdamW(net.parameters())
+
+        ## KEVIN KHA OPTIMIZER
+        # optimizer = tr.optim.Adamax(net.parameters())
         for epoch in range(1000):
             optimizer.zero_grad()
             y_train = net(x[train])
