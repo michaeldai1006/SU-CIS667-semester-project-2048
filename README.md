@@ -25,6 +25,11 @@ python3 ./game/2048_game.py
 python3 ./game-tree-based-AI/ai_game.py
 ```
 
+4. Run NN enhanced tree search AI game file
+```
+python3 ./game-tree+NN-based-AI/ai_game.py
+```
+
 ## Standard Game Play
 Provide game board size when seeing following command line prompt:
 ```
@@ -66,5 +71,29 @@ Next State:
 ------------------------Confirm? (Enter)
 ```
 Hold down the enter key to fast forward
+
+## NN enhanced AI Game Play
+Provide game board size when seeing following command line prompt, 5 game board sizes supported:
+```
+Enter game board size (2, 4, 6, 8 or 10): 
+```
+Choose which AI algorithm to use by typing 1, 2 or 3:
+```
+Which AI should be used? 1: Baseline, 2: Tree Search (Expectimax), 3: Tree Search (Expectimax) + NN:
+```
+When AI has made their move, the game will print out the next game board state to let you confirm:
+```
+Next State: 
+    2    0    0    0
+
+    0    0    0    0
+
+    4    0    0    0
+
+    0    0    0    0
+------------------------Confirm? (Enter)
+```
+Hold down the enter key to fast forward
+
 ## Credits
 tdai06, kkha, dyzheng, ztanruan all rights reserved.
