@@ -19,6 +19,7 @@ processed_nodes = 0
 # #4
 # Generate NN module
 # return type: torch.nn.Module
+# Tiancheng Dai NN
 def getNet(board_size):
     return Sequential(
         Flatten(),
@@ -36,6 +37,15 @@ def getNet(board_size):
 #         Linear(in_features=128,out_features=64),
 #         Linear(in_features=64,out_features=board_size),
 #         ReLU()
+#     )
+
+## DIANA ZHENG NEURAL NETWORK
+# def getNet(board_size):
+#     return Sequential(
+#         Flatten(),
+#         Linear(in_features=board_size*board_size,out_features=board_size),
+#         Linear(in_features=board_size,out_features=int(board_size/2)),
+#         Linear(in_features=int(board_size/2),out_features=1)
 #     )
 
 # #5
